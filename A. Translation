@@ -1,20 +1,356 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define flush cout.flush();
+#define ff first
+#define ss second
+#define pb push_back
 
-#define f(i,n) for(int i=0;i<n;i++)
-using ll = long long;
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x << " "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
 
-const ll mod = 1000000007;
-const int INF = 1e9;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef long double lld;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+void _print(ll t) {cerr << t;}
+void _print(int t) {cerr << t;}
+void _print(string t) {cerr << t;}
+void _print(char t) {cerr << t;}
+void _print(lld t) {cerr << t;}
+void _print(double t) {cerr << t;}
+void _print(ull t) {cerr << t;}
 
-    string s, t;
-    cin >> s >> t;
+template<typename T> T lcm(T x, T y) {return x / __gcd(x, y) * y;}
 
-    reverse(t.begin(), t.end());
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(set <T> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T, class V> void _print(unordered_map <T, V> v);
 
-    cout << (s == t ? "YES" : "NO") << endl;
+template <class T, class V> void _print(pair <T, V> p) {
+    cerr << "{"; _print(p.first); cerr << ","; _print(p.second); cerr << "}";
+}
+template <class T> void _print(vector <T> v) {
+    cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";
+}
+template <class T> void _print(set <T> v) {
+    cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";
+}
+template <class T> void _print(multiset <T> v) {
+    cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";
+}
+template <class T, class V> void _print(map <T, V> v) {
+    cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";
+}
+template <class T, class V> void _print(unordered_map <T, V> v) {
+    cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";
+}
+// ll mod2 = 998244353;
+ll mod = 1e9 + 7;
+// const ll inf = 1e18;
+// ll gcd(ll a, ll b) {
+//     if (b == 0) {
+//         return a;
+//     }
+//     return gcd(b, a % b);
+// }
+// ll lcm(ll a, ll b) {
+//     return (a * b) / gcd(a, b);
+// }
+// vector<ll> dijkstra(ll n, vector<vector<pair<ll, ll>>>&adj, ll source, vector<ll>&cost, vector<ll>&parent) {
+//     vector<ll>dist(n + 1, 1e18);
+//     priority_queue<pair<ll, ll>, vector<pair<ll, ll>>, greater<>>pq;
+//     parent[source] = -1;
+//     cost[source] = 0;
+//     dist[source] = 0;
+//     pq.push({0, source});
+//     while (!pq.empty()) {
+//         ll u = pq.top().second;
+//         ll currDist = pq.top().first;
+//         pq.pop();
+//         if (currDist > dist[u])continue;
+//         for (auto &neighbour : adj[u]) {
+//             ll v = neighbour.first;
+//             ll weight = neighbour.second;
+//             if (dist[u] + weight < dist[v]) {
+//                 dist[v] = dist[u] + weight;
+//                 pq.push({dist[v], v});
+//                 cost[v] = weight;
+//                 parent[v] = u;
+//             }
+//         }
+//     }
+//     return dist;
+// }
+
+// bool checkCycleDir(int node, vector<int>&vis, vector<int>&inStack, vector<vector<int>>&adj) {
+//     vis[node] = inStack[node] = true;
+//     for (int child : adj[node]) {
+//         if (inStack[child]) {
+//             return true;
+//         }
+//         if (!vis[child]) {
+//             if (checkCycleDir(child, vis, inStack, adj)) {
+//                 return true;
+//             }
+
+//         }
+//     }
+//     inStack[node] = false;
+//     return false;
+// }
+
+// class UnionFind {
+// public: vector<int>p, rank;
+// public:
+//     UnionFind(int n) {
+//         rank.assign(n, 0); p.assign(n, 0);
+//         iota(p.begin(), p.end(), 0);
+//     }
+//     int father(int i) {return (p[i] == i) ? i : p[i] = father(p[i]);}
+//     bool same(int i, int j) {return father(i) == father(j);}
+//     void unite(int i, int j) {
+//         if (!same(i, j)) {
+//             int x = father(i), y = father(j);
+//             if (rank[x] > rank[y]) p[y] = x;
+//             else {
+//                 p[x] = y;
+//                 if (rank[x] == rank[y]) rank[y]++;
+//             }
+//         }
+//     }
+// };
+// ll power(ll base, ll exp) {
+//     long long res = 1;
+//     while (exp > 0) {
+//         if (exp % 2 == 1) res = (res * base) % mod2;
+//         base = (base * base) % mod2 ;
+//         exp /= 2;
+//     }
+//     return res;
+// }
+
+// // ll modInverse(ll n) {
+// //     return power(n, mod - 2) % mod;
+// // }
+
+// const int N = 2e5 + 10;
+// vector<ll>fact(2e5 + 5, 1);
+// int dx[] = { -1, 0, 0, 1};
+// int dy[] = {0, -1, 1, 0};
+// const ll MAXN = 200005;
+// vector<ll> spf(MAXN, 0);
+
+// void sieve() {
+//     for (int i = 2; i < MAXN; i++) {
+//         if (spf[i] == 0) {
+//             for (int j = i; j < MAXN; j += i)
+//                 if (spf[j] == 0) spf[j] = i;
+//         }
+//     }
+// }
+
+// vector<ll> getPrimeFactors(ll x) {
+//     vector<ll> res;
+//     while (x > 1) {
+//         int p = spf[x];
+//         res.push_back(p);
+//         while (x % p == 0) x /= p;
+//     }
+//     return res;
+// }
+// class rangeQueryMin {
+// public:
+//     vector<vector<int>> sparseTable(vector<int>&v) {
+//         int n = v.size();
+//         int cnt = 0;
+//         int temp = n;
+//         while (temp > 0) {
+//             cnt++;
+//             temp /= 2;
+//         }
+//         vector<vector<int>>st(n, vector<int>(cnt + 1, 1e9 + 1));
+//         for (int i = 0; i < n; i++) {
+//             st[i][0] = v[i];
+//         }
+//         for (int j = 1; j <= cnt; j++) {
+//             for (int i = 0; i < n; i++) {
+//                 int len = pow(2, j);
+//                 if (i + len - 1 < n) {
+//                     st[i][j] = min(st[i][j - 1], st[i + len / 2][j - 1]);
+//                 }
+//                 else {
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return st;
+//     }
+//     int QueryMin(vector<vector<int>>&st, int l, int r) {
+//         int len = r - l + 1;
+//         int firstSize = log2(len);
+//         int secondSize = len - pow(2, firstSize);
+//         int first = st[l][firstSize];
+//         int second = st[l + secondSize][firstSize];
+//         return (first, second);
+//     }
+
+// };
+
+// class rangeQueryMax {
+// public:
+//     vector<vector<ll>> sparseTable(vector<ll>&v) {
+//         ll n = v.size();
+//         ll cnt = 0;
+//         ll temp = n;
+//         while (temp > 0) {
+//             cnt++;
+//             temp /= 2;
+//         }
+//         vector<vector<ll>>st(n, vector<ll>(cnt + 1, 0));
+//         for (ll i = 0; i < n; i++) {
+//             st[i][0] = v[i];
+//         }
+//         for (ll j = 1; j <= cnt; j++) {
+//             for (ll i = 0; i < n; i++) {
+//                 ll len = pow(2, j);
+//                 if (i + len - 1 < n) {
+//                     st[i][j] = max(st[i][j - 1], st[i + len / 2][j - 1]);
+//                 }
+//                 else {
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return st;
+//     }
+//     ll QueryMax(vector<vector<ll>>&st, ll l, ll r) {
+//         ll len = r - l + 1;
+//         ll firstSize = log2(len);
+//         ll secondSize = len - pow(2, firstSize);
+//         ll first = st[l][firstSize];
+//         ll second = st[l + secondSize][firstSize];
+//         return max(first, second);
+//     }
+
+// };
+
+// class rangeQueryGcd {
+// public:
+//     vector<vector<ll>> sparseTable(vector<ll>&v) {
+//         ll n = v.size();
+//         ll cnt = 0;
+//         ll temp = n;
+//         while (temp > 0) {
+//             cnt++;
+//             temp /= 2;
+//         }
+//         vector<vector<ll>>st(n, vector<ll>(cnt + 1, 0));
+//         for (ll i = 0; i < n; i++) {
+//             st[i][0] = v[i];
+//         }
+//         for (ll j = 1; j <= cnt; j++) {
+//             for (ll i = 0; i < n; i++) {
+//                 ll len = pow(2, j);
+//                 if (i + len - 1 < n) {
+//                     st[i][j] = gcd(st[i][j - 1], st[i + len / 2][j - 1]);
+//                 }
+//                 else {
+//                     break;
+//                 }
+//             }
+//         }
+
+//         return st;
+//     }
+//     ll QueryGcd(vector<vector<ll>>&st, ll l, ll r) {
+//         ll len = r - l + 1;
+//         ll firstSize = log2(len);
+//         ll secondSize = len - pow(2, firstSize);
+//         ll first = st[l][firstSize];
+//         ll second = st[l + secondSize][firstSize];
+//         return gcd(first, second);
+//     }
+
+// };
+// ll kadanes(vector<ll>&v) {
+//     ll n = v.size();
+//     ll maxi = -1e18 - 1;
+//     ll curr = maxi;
+//     for (ll i = 0; i < n; i++) {
+//         if (curr <= 0) {
+//             curr = 0;
+//         }
+//         curr += v[i];
+//         maxi = 1ll * max(maxi, curr);
+//     }
+//     return maxi;
+// }
+int main()
+{
+#ifndef ONLINE_JUDGE
+    freopen("error.txt", "w", stderr);
+#endif
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);cout.tie(0);
+    int t;
+    cin>>t;
+    while(t--){
+        ll n,k;
+        cin>>n>>k;
+        vector<ll>x(n),y(n);
+        map<ll,ll>mp;
+        for(int i=0;i<n;i++){
+            cin>>x[i];
+            mp[x[i]]++;
+        }
+        for(int i=0;i<n;i++){
+            cin>>y[i];
+        }
+        vector<ll>newX,cnt;
+        for(auto [i,j]:mp){
+            newX.push_back(i);
+        }
+        sort(newX.begin(),newX.end());
+        for(auto i:newX){
+            cnt.push_back(mp[i]);
+        }
+        vector<ll>sf(newX.size()+1);
+        //sf stores newX array suffix sum....
+        for(int i=newX.size()-1;i>=0;i--){
+            sf[i]=(sf[i+1]+cnt[i])%mod;
+        }
+        debug(sf)
+        vector<ll>sf2(newX.size()+1);
+        //sf2[i] stores sum of all the elements from newx[i]th point to newx[i]+kth
+        //point 
+        for(int i=newX.size()-1;i>=0;i--){
+            ll ind=upper_bound(newX.begin(),newX.end(),newX[i]+k)-newX.begin();
+            ind--;
+            sf2[i]=sf[i]-sf[ind+1];
+        }
+        debug(sf2)
+        vector<ll>sfMax(newX.size()+1);
+        //sfMax stores max sum of sf2 array...
+        for(int i=newX.size()-1;i>=0;i--){
+            sfMax[i]=max(sfMax[i+1],sf2[i]);
+        }
+        debug(sfMax)
+        ll ans=0;
+        for(int i=0;i<newX.size();i++){
+            ll ind=upper_bound(newX.begin(),newX.end(),newX[i]+k)-newX.begin();
+            ind--;
+            debug(ind)
+            ans=max(ans,sf[i]-sf[ind+1]+sfMax[ind+1]);
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
 }
