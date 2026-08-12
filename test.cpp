@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define f(i,n) for(int i=0;i<n;i++)
+using ll = long long;
+
+const ll mod = 1000000007;
+const int INF = 1e9;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string s, t;
+    cin >> s >> t;
+
+    reverse(t.begin(), t.end());
+
+    cout << (s == t ? "YES" : "NO") << endl;
+}
